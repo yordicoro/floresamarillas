@@ -1,0 +1,129 @@
+
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --bg: #07050f;
+    --gold: #ffd23f;
+    --gold-soft: #ffe89a;
+    --ink: #fff6d6;
+    --panel: rgba(20, 12, 34, 0.86);
+    --line: rgba(255, 210, 63, 0.35);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background:
+      radial-gradient(60% 50% at 50% 48%, rgba(255, 176, 32, 0.16), transparent 70%),
+      radial-gradient(45% 40% at 18% 20%, rgba(120, 60, 170, 0.22), transparent 70%),
+      radial-gradient(40% 40% at 85% 82%, rgba(60, 40, 140, 0.22), transparent 70%),
+      #07050f;
+    color: var(--ink);
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+    overflow: hidden;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: none;
+  }
+  #c { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+
+  #hud {
+    position: fixed; inset: 0; pointer-events: none;
+    display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+    padding: calc(env(safe-area-inset-top, 0px) + 60px) 24px calc(env(safe-area-inset-bottom, 0px) + 30px);
+    text-align: center;
+  }
+  #para {
+    font-family: "Dancing Script", "Brush Script MT", cursive;
+    font-size: clamp(24px, 5vw, 38px);
+    color: var(--gold);
+    margin: 0 0 4px;
+    text-shadow: 0 0 18px rgba(255, 190, 40, 0.6);
+    opacity: 0; animation: aparece 2.4s ease 1.2s forwards;
+  }
+  #titulo {
+    font-size: clamp(26px, 6.4vw, 60px);
+    font-weight: 500; font-style: italic;
+    line-height: 1.12; margin: 0; max-width: 16ch;
+    color: var(--ink);
+    text-shadow: 0 0 28px rgba(255, 200, 60, 0.55), 0 2px 12px rgba(0, 0, 0, 0.6);
+    opacity: 0; animation: aparece 2.6s ease 1.6s forwards;
+  }
+  #mensaje {
+    font-size: clamp(15px, 3.6vw, 21px);
+    line-height: 1.55; max-width: 34ch; margin: 0;
+    color: var(--gold-soft);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+    opacity: 0; animation: aparece 2.6s ease 3s forwards;
+  }
+  #de {
+    font-family: "Dancing Script", "Brush Script MT", cursive;
+    font-size: clamp(20px, 4vw, 28px);
+    color: var(--gold); margin: 8px 0 0;
+    opacity: 0; animation: aparece 2.6s ease 3.6s forwards;
+  }
+  @keyframes aparece { to { opacity: 1; } }
+
+  .fabs {
+    position: fixed; z-index: 5;
+    top: calc(env(safe-area-inset-top, 0px) + 12px); right: 12px;
+    display: flex; gap: 10px;
+    transition: opacity .6s ease;
+  }
+  .fabs.oculto { opacity: 0; pointer-events: none; }
+  .fab {
+    width: 46px; height: 46px; border-radius: 50%;
+    border: 1px solid var(--line);
+    background: rgba(20, 12, 34, 0.55);
+    color: var(--gold); font-size: 20px; line-height: 1;
+    display: grid; place-items: center; cursor: pointer;
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  }
+  .fab:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--gold); outline-offset: 2px;
+  }
+
+  #modal {
+    position: fixed; inset: 0; z-index: 10;
+    display: none; align-items: center; justify-content: center;
+    padding: 20px; background: rgba(4, 2, 10, 0.7);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    touch-action: auto; -webkit-user-select: auto; user-select: auto;
+  }
+  #modal.abierto { display: flex; }
+  .card {
+    width: min(92vw, 400px); max-height: 90%; overflow-y: auto;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
+    padding: 22px 20px; text-align: left;
+    box-shadow: 0 0 60px rgba(255, 190, 40, 0.15);
+    font-family: Georgia, "Times New Roman", serif; font-style: normal;
+  }
+  .card h2 {
+    font-family: "Dancing Script", cursive; font-size: 30px; font-weight: 600;
+    color: var(--gold); margin: 0 0 14px;
+  }
+  .card label { display: block; font-size: 14px; color: var(--gold-soft); margin: 12px 0 5px; }
+  .card input, .card textarea {
+    width: 100%; box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.07); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 12px; font: 16px Georgia, serif;
+  }
+  .card textarea { resize: vertical; min-height: 84px; }
+  .fila { display: flex; gap: 10px; margin-top: 18px; }
+  .btn {
+    flex: 1; padding: 11px 14px; border-radius: 999px; cursor: pointer;
+    font: 600 15px Georgia, serif; border: 1px solid var(--line);
+    background: transparent; color: var(--gold-soft);
+  }
+  .btn.principal { background: var(--gold); color: #3a2100; border-color: var(--gold); }
+  .ayuda { font-size: 13px; line-height: 1.5; color: rgba(255, 232, 154, 0.75); margin: 12px 0 0; }
+  #qrwrap { display: grid; place-items: center; margin: 4px 0 6px; }
+  #qrbox { background: #fff; padding: 14px; border-radius: 14px; line-height: 0; min-width: 232px; min-height: 232px; }
+  #qrbox img, #qrbox canvas { display: block; }
+  #qrtxt { text-align: center; font-family: "Dancing Script", cursive; font-size: 24px; color: var(--gold); margin: 8px 0 0; }
+  [hidden] { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    #para, #titulo, #mensaje, #de { animation-duration: .01s; animation-delay: 0s; }
+  }

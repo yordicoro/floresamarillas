@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07050f">
+<title>Universo de Flores Amarillas 🌼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+<canvas id="c" aria-label="Universo de flores amarillas girando"></canvas>
+
+<div id="hud">
+  <div>
+    <p id="para">Para ti</p>
+    <h1 id="titulo">Feliz Día de las Flores Amarillas</h1>
+  </div>
+  <div>
+    <p id="mensaje"></p>
+    <p id="de" hidden></p>
+  </div>
+</div>
+
+<div class="fabs" id="fabs">
+  <button class="fab" id="btnEditar" aria-label="Personalizar mensaje" title="Personalizar">✎</button>
+  <button class="fab" id="btnQR" aria-label="Mostrar código QR" title="Código QR">▦</button>
+</div>
+
+<div id="modal" role="dialog" aria-modal="true">
+  <div class="card" id="panelEditar" hidden>
+    <h2>Personalizar</h2>
+    <label for="inPara">Para quién es</label>
+    <input id="inPara" maxlength="40" placeholder="Su nombre">
+    <label for="inMsg">Tu mensaje</label>
+    <textarea id="inMsg" maxlength="240" placeholder="Escribe algo bonito…"></textarea>
+    <label for="inDe">De parte de</label>
+    <input id="inDe" maxlength="40" placeholder="Tu nombre">
+    <div class="fila">
+      <button class="btn" data-cerrar>Cancelar</button>
+      <button class="btn principal" id="btnAplicar">Aplicar</button>
+    </div>
+    <p class="ayuda">Después de aplicar, abre el código QR para que incluya tu mensaje.</p>
+  </div>
+
+  <div class="card" id="panelQR" hidden>
+    <h2>Código QR</h2>
+    <div id="qrwrap"><div id="qrbox"></div></div>
+    <p id="qrtxt">Escanéame 🌼</p>
+    <label for="inUrl">Enlace del QR</label>
+    <input id="inUrl" inputmode="url" autocapitalize="off" spellcheck="false">
+    <p class="ayuda">Si compartes esta página con un enlace, pégalo aquí y toca «Actualizar QR». Luego captura la pantalla o imprímelo.</p>
+    <div class="fila">
+      <button class="btn" data-cerrar>Cerrar</button>
+      <button class="btn principal" id="btnRegen">Actualizar QR</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

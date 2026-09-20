@@ -212,7 +212,7 @@
   var ease = function (t) { return 1 - Math.pow(1 - t, 3); };
 
   function frame(now) {
-    var dt = Math.min(0.05, (now - last) / 1000); last = now;
+    var dt = Math.max(0, Math.min(0.05, (now - last) / 1000)); last = now;
     var m = reduce ? 0.4 : 1;
     T += dt * m;
     idle += dt;

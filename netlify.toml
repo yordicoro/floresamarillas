@@ -1,0 +1,3 @@
+[build]
+  command = "mkdir -p dist && cp html/universo-flores-amarillas.html dist/index.html && cp -r css js musica dist/"
+  publish = "dist"

@@ -213,6 +213,7 @@
 
   function frame(now) {
     var dt = Math.max(0, Math.min(0.05, (now - last) / 1000)); last = now;
+    var sound = window.FlowerAudio ? window.FlowerAudio.update(dt, reduce) : { bass: 0, energy: 0 };
     var m = reduce ? 0.4 : 1;
     T += dt * m;
     idle += dt;
@@ -292,7 +293,7 @@
     for (var q = 0; q < items.length; q++) {
       var it = items[q];
       if (it.t === 0) {
-        var pulse = 1 + 0.035 * Math.sin(T * 1.6);
+        var pulse = 1 + 0.035 * Math.sin(T * 1.6) + sound.bass * 0.22;
         var reach = U * 0.11 * e * pulse;
         // halo solar
         var hr = reach * 3.2;
@@ -301,11 +302,13 @@
         hg.addColorStop(1, 'rgba(255,190,40,0)');
         ctx.globalAlpha = 1; ctx.fillStyle = hg;
         ctx.beginPath(); ctx.arc(it.p.x, it.p.y, hr, 0, TAU); ctx.fill();
-        sprite(SUN, it.p.x, it.p.y, reach, T * 0.12, Math.min(1, e * 1.3));
+        if (window.FlowerAudio) window.FlowerAudio.draw(ctx, it.p.x, it.p.y, reach, T, e, reduce);
+        sprite(SUN, it.p.x, it.p.y, reach, T * 0.12 + Math.sin(T * 22) * sound.energy * 0.025, Math.min(1, e * 1.3));
       } else if (it.t === 1) {
         var F = it.fl;
-        var pr = F.size * U * it.p.s * e;
-        sprite(F.spr, it.p.x, it.p.y, pr, F.rot + T * F.spin, Math.min(1, e * 1.3));
+        var pr = F.size * U * it.p.s * e * (1 + sound.bass * 0.18);
+        var vibration = Math.sin(T * 24 + F.rot) * sound.energy * U * 0.003;
+        sprite(F.spr, it.p.x + vibration, it.p.y + vibration * 0.5, pr, F.rot + T * F.spin, Math.min(1, e * 1.3));
         for (var mi = 0; mi < F.moons.length; mi++) {
           var mo = F.moons[mi], ma = T * mo.sp + mo.ph;
           sprite(mo.spr, it.p.x + Math.cos(ma) * pr * mo.rr, it.p.y + Math.sin(ma) * pr * mo.rr * 0.6, pr * 0.34, ma * 2, Math.min(1, e * 1.2));

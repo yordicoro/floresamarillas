@@ -22,3 +22,11 @@ Para compartir un QR accesible desde otros dispositivos, publica las tres carpet
 Modifica los textos y la estructura en HTML, la apariencia en CSS y el comportamiento en JavaScript.
 La biblioteca QRCode conserva su enlace externo y se carga antes de app.js.
 Para restaurar la versión original, copia el archivo .bak a la raíz y quita la extensión .bak.
+## Música y ondas
+
+Toca el girasol de la esquina superior izquierda para reproducir o pausar Hold On. La canción se repite y las flores reaccionan a los graves y a la amplitud real del audio. Las ondas se atenúan al pausar. Con movimiento reducido, las pulsaciones son suaves y las ondas no se dibujan.
+
+- Audio: musica/Hold On.mp3.
+- Reproductor y análisis: js/musica.js.
+- Validar con Live Server o en Netlify; el análisis del audio local puede estar restringido al abrir mediante file://.
+- netlify.toml prepara dist con HTML, CSS, JS y musica. Subir tambi?n el MP3 al repositorio.

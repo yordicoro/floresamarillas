@@ -127,3 +127,15 @@
   @media (prefers-reduced-motion: reduce) {
     #para, #titulo, #mensaje, #de { animation-duration: .01s; animation-delay: 0s; }
   }
+
+/* Control musical independiente: siempre disponible para pausar. */
+.music-control { position: fixed; z-index: 6; top: calc(env(safe-area-inset-top, 0px) + 10px); left: 12px; max-width: calc(100vw - 145px); }
+#btnMusica { display: flex; align-items: center; gap: 8px; min-height: 46px; padding: 3px 12px 3px 5px; border: 1px solid var(--line); border-radius: 999px; background: rgba(20,12,34,.78); color: var(--gold-soft); cursor: pointer; touch-action: manipulation; font: 12px Georgia, serif; }
+#btnMusica:disabled { cursor: wait; opacity: .7; }
+.music-flower { display: block; font-size: 32px; line-height: 1.2; transform: scale(var(--music-scale, 1)); }
+.playing .music-flower { animation: music-turn 12s linear infinite; }
+#musicStatus { display: block; max-width: 210px; margin-top: 5px; font: 12px/1.4 Georgia, serif; color: var(--gold-soft); }
+#musicStatus:not(:empty) { padding: 6px 9px; border-radius: 8px; background: var(--panel); }
+@keyframes music-turn { from { transform: rotate(0deg) scale(var(--music-scale, 1)); } to { transform: rotate(360deg) scale(var(--music-scale, 1)); } }
+@media (max-width: 380px) { #musicLabel { max-width: 70px; } }
+@media (prefers-reduced-motion: reduce) { .playing .music-flower { animation: none; } }

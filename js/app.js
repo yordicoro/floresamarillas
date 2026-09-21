@@ -91,6 +91,44 @@
     }
     return c;
   }
+  function makeLily(S) {
+    var c = document.createElement('canvas'); c.width = c.height = S;
+    var g = c.getContext('2d'); g.translate(S / 2, S / 2);
+    var R = S * 0.34;
+    var halo = g.createRadialGradient(0, 0, 0, 0, 0, S * 0.49);
+    halo.addColorStop(0, 'rgba(255,204,55,0.25)'); halo.addColorStop(1, 'rgba(255,204,55,0)');
+    g.fillStyle = halo; g.fillRect(-S/2, -S/2, S, S);
+    for (var layer = 0; layer < 2; layer++) {
+      for (var i = 0; i < 3; i++) {
+        g.save(); g.rotate(i * TAU / 3 + layer * Math.PI / 3 - Math.PI / 2);
+        var length = R * (layer ? 0.96 : 1.08);
+        var grad = g.createLinearGradient(0, 0, length, 0);
+        grad.addColorStop(0, '#b68108'); grad.addColorStop(0.22, '#efb900');
+        grad.addColorStop(0.6, '#ffe142'); grad.addColorStop(1, '#fff4a0');
+        g.fillStyle = grad; g.beginPath(); g.moveTo(-R*0.08,0);
+        g.bezierCurveTo(R*0.28,-R*0.38,R*0.78,-R*0.38,length,-R*0.12);
+        g.bezierCurveTo(R*0.73,R*0.02,R*0.63,R*0.4,R*0.22,R*0.2);
+        g.quadraticCurveTo(0,R*0.08,-R*0.08,0); g.fill();
+        g.strokeStyle = 'rgba(170,103,0,0.38)'; g.lineWidth = Math.max(0.8,S*0.0025);
+        g.beginPath(); g.moveTo(0,0); g.quadraticCurveTo(R*0.55,-R*0.05,length,-R*0.12); g.stroke();
+        g.strokeStyle = 'rgba(255,250,181,0.55)';
+        g.beginPath(); g.moveTo(R*0.12,R*0.04); g.quadraticCurveTo(R*0.55,R*0.17,R*0.83,-R*0.035); g.stroke();
+        for(var dot=0;dot<8;dot++) {
+          g.fillStyle='rgba(145,80,0,0.4)'; g.beginPath();
+          g.ellipse(R*(0.18+(dot%4)*0.065), R*(dot<4?-0.07:0.085),R*0.009,R*0.016,0,0,TAU);g.fill();
+        }
+        g.restore();
+      }
+    }
+    for(var st=0;st<6;st++) {
+      var a=st*TAU/6, x=Math.cos(a)*R*0.24, y=Math.sin(a)*R*0.24;
+      g.strokeStyle='#ffed94';g.lineWidth=S*0.005;g.beginPath();g.moveTo(0,0);g.quadraticCurveTo(x*0.35,y*0.35-R*0.07,x,y);g.stroke();
+      g.fillStyle='#985019';g.beginPath();g.ellipse(x,y,R*0.025,R*0.065,a+0.6,0,TAU);g.fill();
+    }
+    g.fillStyle='#c4ca50';g.beginPath();g.arc(0,0,R*0.035,0,TAU);g.fill();
+    return c;
+  }
+  var LILY = makeLily(240);
   var SPR = [
     makeSprite({ size: 200, n: 10, layers: 2, w: 0.30, cr: 0.34, seeds: 40, cols: [['#f2a900', '#ffd21f'], ['#ffd21f', '#fff08a']] }),
     makeSprite({ size: 200, n: 14, layers: 2, w: 0.24, cr: 0.42, seeds: 60, cols: [['#e59a00', '#ffc300'], ['#ffc300', '#ffe14d']] }),
@@ -147,6 +185,14 @@
         moons: Math.random() < 0.4 ? [{ rr: rand(2.2, 3.2), sp: rand(1.2, 2.4) * (Math.random() < 0.5 ? -1 : 1), ph: rand(0, TAU), spr: SPR[Math.floor(Math.random() * SPR.length)] }] : []
       });
     }
+    // One extra yellow lily per orbit, keeping all existing sunflowers.
+    ring.flowers.push({
+      off: Math.PI / COUNTS[i],
+      size: rand(0.032, 0.042),
+      spr: LILY,
+      rot: rand(0, TAU), spin: rand(-0.5, 0.5),
+      moons: []
+    });
     rings.push(ring);
   }
   function orbitPos(ring, a, e) {

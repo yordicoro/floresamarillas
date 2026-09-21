@@ -14,7 +14,7 @@
     de: (qs.get('de') || '').slice(0, 40)
   };
   function applyText() {
-    $('para').textContent = state.para ? 'Para ' + state.para : 'Para ti';
+    $('para').textContent = state.para ? 'Para ' + state.para : 'Para ti Marilin Brigith';
     $('mensaje').textContent = state.msg || DEFAULT_MSG;
     var de = $('de');
     if (state.de) { de.textContent = '— ' + state.de; de.hidden = false; } else { de.hidden = true; }
